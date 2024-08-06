@@ -1,8 +1,17 @@
-- hosts: 18.218.129.231
+- name: Install and configure MariaDB
+  hosts: all
   become: yes
   tasks:
-  - name: Install apache httpd  (state=present is optional)
-    ansible.builtin.apt:
-      name: apache2
-      state: present
-      update_cache: yes
+    - name: Install, Unzip mariadb, and mariadb-server
+      apt:
+        name:
+          - unzip
+          - mariadb-server
+        state: present
+        update_cache: yes
+
+    - name: Ensure mariadb service is started
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
