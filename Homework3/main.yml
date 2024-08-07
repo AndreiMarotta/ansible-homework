@@ -1,12 +1,23 @@
 - hosts: all
   become: yes
   tasks:
-    - name: Create user
-      ansible.builtin.user:
-        name: tim
-        state: present
+  
+  - name: Install apache httpd
+    ansible.builtin.dnf:
+      name: httpd
+      state: present
+      update_cache: yes
+    notify: Install git
 
-    - name: Create group
-      ansible.builtin.group:
-        name: devops
-        state: present 
+  - name: Start httpd service
+    service:
+      name: httpd
+      state: started
+      enabled: yes  
+
+  handlers:
+  - name: Install git
+    ansible.builtin.dnf:
+      name: httpd
+      state: present
+      update_cache: yes 

@@ -1,6 +1,7 @@
 - hosts: all
   become: yes
   tasks:
+  
     - name: Create users
       ansible.builtin.user:
         name: "{{ item }}"
