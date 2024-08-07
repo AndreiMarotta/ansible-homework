@@ -1,33 +1,37 @@
-- name: Create users and groups
-  hosts: all
+- hosts: all
   become: yes
   tasks:
-    - name: Create devops group
-      group:
-        name: devops
+    - name: Create users
+      ansible.builtin.user:
+        name: "{{ item }}"
         state: present
+      loop:
+        - Andrei
+        - Tim
+        - Ann
 
-    - name: Create qa group
-      group:
-        name: qa
+    - name: Create groups
+      ansible.builtin.group:
+        name: "{{ item }}"
         state: present
+      loop:
+        - devops
+        - qa 
 
-    - name: Create user mokhira
-      user:
-        name: mokhira
+    - name: Add Andrei to devops group
+      ansible.builtin.user:
+        name: Andrei
         groups: devops
-        state: present
-        shell: /bin/bash
+        append: yes
 
-    - name: Create user tim
-      user:
-        name: tim
+    - name: Add Tim to qa group
+      ansible.builtin.user:   
+        name: Tim
         groups: qa
-        state: present
-       
+        append: yes
 
-    - name: Create user ann
-      user:
-        name: ann
+    - name: Add Ann to qa group
+      ansible.builtin.user:
+        name: Ann
         groups: qa
-        state: present
+        append: yes
