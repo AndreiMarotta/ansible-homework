@@ -1,0 +1,13 @@
+- hosts: all
+  become: yes
+  tasks:
+
+    - name: create user
+      ansible.builtin.user:
+        name: Tim
+        state: present
+
+    - name: Create group
+      ansible.builtin.group:
+        name: devops
+        state: present 
